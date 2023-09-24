@@ -42,5 +42,14 @@ public class BookManagerController {
         bookManagerService.updateBookById(bookId, book);
         return new ResponseEntity<>(bookManagerService.getBookById(bookId), HttpStatus.OK);
     }
+    @DeleteMapping({"/{bookId}"})
+    public ResponseEntity<Void> deleteBookById(@PathVariable Long bookId) {
+        if (bookManagerService.existsById(bookId)) {
+            bookManagerService.deleteBookById(bookId);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

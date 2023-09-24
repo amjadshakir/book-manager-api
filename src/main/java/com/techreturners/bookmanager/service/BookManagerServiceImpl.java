@@ -3,6 +3,7 @@ package com.techreturners.bookmanager.service;
 import com.techreturners.bookmanager.model.Book;
 import com.techreturners.bookmanager.repository.BookManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,5 +44,17 @@ public class BookManagerServiceImpl implements BookManagerService {
 
         bookManagerRepository.save(retrievedBook);
     }
+
+    @Override
+    public void deleteBookById(Long bookId) {
+        bookManagerRepository.deleteById(bookId);
+    }
+    @Override
+    public boolean existsById(Long bookId) {
+        return bookManagerRepository.existsById(bookId);
+    }
+
+
+
 
 }

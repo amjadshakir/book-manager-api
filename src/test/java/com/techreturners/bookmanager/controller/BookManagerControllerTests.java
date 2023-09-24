@@ -1,5 +1,6 @@
 package com.techreturners.bookmanager.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techreturners.bookmanager.model.Book;
 import com.techreturners.bookmanager.model.Genre;
@@ -108,5 +109,31 @@ public class BookManagerControllerTests {
 
         verify(mockBookManagerServiceImpl, times(1)).updateBookById(book.getId(), book);
     }
+    @Test
+    public void testDeleteMappingDeleteBookByIdWhenBookExists() throws Exception {
+        Book book = new Book(4L, "Book Four", "This is the description for Book Four", "Person Four", Genre.Fantasy);
+        when(mockBookManagerServiceImpl.existsById(book.getId())).thenReturn(true);
+        this.mockMvcController.perform(
+                MockMvcRequestBuilders.delete("/api/v1/book/" + book.getId()))
+            .andExpect(MockMvcResultMatchers.status().is(204));
+    }
+    @Test
+    public void testDeleteMappingDeleteBookByIdWhenBookNotExists() throws Exception {
+        Book book = new Book(4L, "Book Four", "This is the description for Book Four", "Person Four", Genre.Fantasy);
+        when(mockBookManagerServiceImpl.existsById(book.getId())).thenReturn(false);
+        this.mockMvcController.perform(
+                MockMvcRequestBuilders.delete("/api/v1/book/" + book.getId()))
+            .andExpect(MockMvcResultMatchers.status().is(404));
+    }
+
+
+
+
+
+
+
+
+
+
 
 }

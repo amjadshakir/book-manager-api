@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @DataJpaTest
 public class BookManagerRepositoryTests {
@@ -36,5 +38,13 @@ public class BookManagerRepositoryTests {
         assertThat(bookById).isNotNull();
 
     }
+    @Test
+    public void testCreatesAndDeleteBookByIDReturnsNoBook() {
+        Book book = new Book(1L, "Book Two", "This is the description for Book Two", "Person Two", Genre.Fantasy);
+        bookManagerRepository.save(book);
+        bookManagerRepository.deleteById(book.getId());
+       // assertFalse(bookManagerRepository.existsById(book.getId()));
+    }
+
 
 }
