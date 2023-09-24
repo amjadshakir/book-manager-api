@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @DataJpaTest
@@ -79,6 +80,14 @@ public class BookManagerServiceTests {
         bookManagerServiceImpl.updateBookById(bookId, book);
 
         verify(mockBookManagerRepository, times(1)).save(book);
+    }
+    @Test
+    public void testDeleteBookById() {
+        Long bookId = 5L;
+        var book = new Book(5L, "Book Five", "This is the description for Book Five", "Person Five", Genre.Fantasy);
+        when(mockBookManagerRepository.findById(bookId)).thenReturn(Optional.of(book));
+        bookManagerServiceImpl.deleteBookById(bookId);
+        assertEquals( false, mockBookManagerRepository.existsById(bookId));
     }
 
 }
